@@ -17,7 +17,16 @@ public class GifModel{
     public class Images {
 
         @SerializedName("fixed_height_still")
-    Fixed_height Fixed_heightObject;
+          Fixed_height Fixed_heightObject;
+        @SerializedName("original_still")
+        OrginalImage originalImage;
+        public OrginalImage getOriginalImage() {
+            return originalImage;
+        }
+
+        public void setOriginalImage(OrginalImage originalImage) {
+            this.originalImage = originalImage;
+        }
     public Fixed_height getFixed_heightObject() {
         return Fixed_heightObject;
     }
@@ -175,5 +184,48 @@ public class User {
 
     public void setUser(User user) {
         this.user = user;
+    }
+    public class OrginalImage {
+        private String url;
+        private String width;
+        private String height;
+        private String size;
+
+
+        // Getter Methods
+
+        public String getUrl() {
+            return url;
+        }
+
+        public String getWidth() {
+            return width;
+        }
+
+        public String getHeight() {
+            return height;
+        }
+
+        public String getSize() {
+            return size;
+        }
+
+        // Setter Methods
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public void setWidth(String width) {
+            this.width = width;
+        }
+
+        public void setHeight(String height) {
+            this.height = height;
+        }
+
+        public void setSize(String size) {
+            this.size = size;
+        }
     }
 }

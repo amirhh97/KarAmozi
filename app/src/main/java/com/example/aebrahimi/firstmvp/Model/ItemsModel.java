@@ -1,5 +1,7 @@
 package com.example.aebrahimi.firstmvp.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -16,7 +18,7 @@ public class ItemsModel {
     public void setData(ArrayList<GifModel> data) {
         this.data = data;
     }
-
+    @SerializedName("pagination")
     Pagination pagination;
     Meta meta;
 

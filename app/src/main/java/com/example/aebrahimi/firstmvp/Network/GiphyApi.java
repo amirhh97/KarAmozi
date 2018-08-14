@@ -3,6 +3,7 @@ package com.example.aebrahimi.firstmvp.Network;
 
 import com.example.aebrahimi.firstmvp.Model.GifModel;
 import com.example.aebrahimi.firstmvp.Model.ItemsModel;
+import com.example.aebrahimi.firstmvp.Model.RandomModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,4 +16,6 @@ import retrofit2.http.Query;
 public interface GiphyApi {
     @GET("v1/gifs/trending")
     Call<ItemsModel> getTrending(@Query("api_key")String ApiKey,@Query("offset")int offset,@Query("limit")int limit);
+    @GET("/v1/gifs/random")
+    Call<RandomModel> getRandoms(@Query("api_key") String Key);
 }

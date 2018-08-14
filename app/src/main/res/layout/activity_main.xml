@@ -18,7 +18,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
 </RelativeLayout>
