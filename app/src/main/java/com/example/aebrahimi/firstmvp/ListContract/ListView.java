@@ -24,6 +24,7 @@ public class ListView extends AppCompatActivity implements ListContract.View {
     RecyclerView recyclerView;
     GridLayoutManager layoutManager;
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
