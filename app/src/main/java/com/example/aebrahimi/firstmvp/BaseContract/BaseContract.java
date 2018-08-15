@@ -5,14 +5,15 @@ package com.example.aebrahimi.firstmvp.BaseContract;
  */
 
 public interface BaseContract {
-    interface Presenter
-    {
+    interface Presenter {
         void attach(View view);
+
         void detach();
     }
-    interface View
-    {
+
+    interface View {
         void showProgress();
+
         void hideProgress();
     }
 }

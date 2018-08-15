@@ -1,8 +1,7 @@
 package com.example.aebrahimi.firstmvp.ShowContract;
+
 import com.example.aebrahimi.firstmvp.BaseContract.BaseContract;
 import com.example.aebrahimi.firstmvp.Model.Item;
-
-import java.util.ArrayList;
 
 /**
  * Created by aebrahimi on 8/14/2018 AD.

@@ -22,12 +22,12 @@ import java.util.List;
 
 public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Holder> {
 
-    ArrayList<Item>items;
+    ArrayList<Item> items;
     Context c;
-    public TrendingAdapter(Context c, ArrayList<Item> items)
-    {
-        this.c=c;
-        this.items=items;
+
+    public TrendingAdapter(Context c, ArrayList<Item> items) {
+        this.c = c;
+        this.items = items;
     }
 
     @Override
@@ -35,9 +35,9 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Holder
         return new Holder(LayoutInflater.from(c).inflate(R.layout.list_items, parent, false), new ItemClickListener() {
             @Override
             public void OnItemClick(View view, int Position) {
-            Intent intent=new Intent(parent.getContext(),ShowView.class);
-            intent.putExtra("item",items.get(Position));
-            parent.getContext().startActivity(intent);
+                Intent intent = new Intent(parent.getContext(), ShowView.class);
+                intent.putExtra("item", items.get(Position));
+                parent.getContext().startActivity(intent);
 
             }
         });
@@ -55,38 +55,38 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Holder
         return items.size();
     }
 
-    public  class Holder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView gif;
         TextView user;
         ItemClickListener listener;
-        public Holder(View itemView,ItemClickListener listener) {
+
+        public Holder(View itemView, ItemClickListener listener) {
             super(itemView);
-            this.listener=listener;
-            gif=itemView.findViewById(R.id.gif);
-            user=itemView.findViewById(R.id.usertxt);
+            this.listener = listener;
+            gif = itemView.findViewById(R.id.gif);
+            user = itemView.findViewById(R.id.usertxt);
             gif.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            listener.OnItemClick(v,this.getLayoutPosition());
+            listener.OnItemClick(v, this.getLayoutPosition());
         }
     }
-    public interface ItemClickListener
-    {
-         void OnItemClick(View view,int Position);
+
+    public interface ItemClickListener {
+        void OnItemClick(View view, int Position);
     }
+
     public List<Item> getItems() {
         return items;
     }
-    public void Additems(List<Item> newItems)
-    {
-        for(int i=0;i<newItems.size();i++)
-        {
-            if(newItems.get(i).getTitle()!=null)
+
+    public void Additems(List<Item> newItems) {
+        for (int i = 0; i < newItems.size(); i++) {
+            if (newItems.get(i).getTitle() != null)
                 items.add(newItems.get(i));
         }
-      //  items.addAll(newItems);
+        //  items.addAll(newItems);
     }
 }

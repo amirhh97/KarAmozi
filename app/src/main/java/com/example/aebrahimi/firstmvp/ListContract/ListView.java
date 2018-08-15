@@ -1,7 +1,7 @@
 package com.example.aebrahimi.firstmvp.ListContract;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,35 +17,31 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ListView extends AppCompatActivity implements ListContract.View{
+public class ListView extends AppCompatActivity implements ListContract.View {
     @Inject
-   ListContract.Presenter presenter;
-   TrendingAdapter adapter;
-   RecyclerView recyclerView;
-   GridLayoutManager layoutManager;
-   ProgressBar progressBar;
-
-
-
+    ListContract.Presenter presenter;
+    TrendingAdapter adapter;
+    RecyclerView recyclerView;
+    GridLayoutManager layoutManager;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView=findViewById(R.id.recycler_trend);
-        progressBar=findViewById(R.id.progressBar);
+        recyclerView = findViewById(R.id.recycler_trend);
+        progressBar = findViewById(R.id.progressBar);
         App.getInjector().inject(this);
         presenter.attach(this);
-        adapter=new TrendingAdapter(this,new ArrayList<Item>()) ;
-        layoutManager= new GridLayoutManager(this,2);
+        adapter = new TrendingAdapter(this, new ArrayList<Item>());
+        layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new TrendingAdapter(this,new ArrayList<Item>());
+        adapter = new TrendingAdapter(this, new ArrayList<Item>());
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(layoutManager.findLastCompletelyVisibleItemPosition()==adapter.getItemCount()-1)
-                {
+                if (layoutManager.findLastCompletelyVisibleItemPosition() == adapter.getItemCount() - 1) {
                     progressBar.setVisibility(View.VISIBLE);
                     presenter.getListItems();
                 }
@@ -57,7 +53,7 @@ public class ListView extends AppCompatActivity implements ListContract.View{
     @Override
     public void ShowItems(List<Item> items) {
         adapter.Additems(items);
-       // adapter.notifyItemRangeInserted(adapter.getItemCount()-items.size(),adapter.getItemCount());
+        // adapter.notifyItemRangeInserted(adapter.getItemCount()-items.size(),adapter.getItemCount());
         adapter.notifyDataSetChanged();
         hideProgress();
 
@@ -72,6 +68,7 @@ public class ListView extends AppCompatActivity implements ListContract.View{
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

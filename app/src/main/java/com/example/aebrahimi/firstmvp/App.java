@@ -1,11 +1,7 @@
 package com.example.aebrahimi.firstmvp;
-
 import android.app.Application;
-
-
 import com.example.aebrahimi.firstmvp.Dagger.DaggerInjector;
 import com.example.aebrahimi.firstmvp.Dagger.Injector;
-
 import com.example.aebrahimi.firstmvp.Dagger.NetworkModule;
 import com.example.aebrahimi.firstmvp.Dagger.PresenterModule;
 
@@ -16,11 +12,13 @@ import com.example.aebrahimi.firstmvp.Dagger.PresenterModule;
 
 public class App extends Application {
     private static Injector injector;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        injector= DaggerInjector.builder().networkModule(new NetworkModule()).presenterModule(new PresenterModule()).build();
+        injector = DaggerInjector.builder().networkModule(new NetworkModule()).presenterModule(new PresenterModule()).build();
     }
+
     public static Injector getInjector() {
         return injector;
     }
