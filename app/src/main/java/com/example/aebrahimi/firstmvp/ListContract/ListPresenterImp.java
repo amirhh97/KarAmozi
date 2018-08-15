@@ -2,34 +2,42 @@ package com.example.aebrahimi.firstmvp.ListContract;
 
 import android.util.Log;
 
+import com.example.aebrahimi.firstmvp.App;
+import com.example.aebrahimi.firstmvp.BaseContract.BaseContract;
+import com.example.aebrahimi.firstmvp.Constants;
 import com.example.aebrahimi.firstmvp.Model.GifModel;
 import com.example.aebrahimi.firstmvp.Model.Item;
 import com.example.aebrahimi.firstmvp.Model.ItemsModel;
 import com.example.aebrahimi.firstmvp.Network.GiphyApi;
 import com.example.aebrahimi.firstmvp.Network.RetrofitBuilder;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by aebrahimi on 8/13/2018 AD.
  */
 
-public class ListPresenterImp implements ListContract.Presenter {
-    ListContract.View view;
+public class ListPresenterImp  implements ListContract.Presenter {
+   WeakReference< ListContract.View> view;
     int Offset=0;
-    public ListPresenterImp(ListContract.View view)
+    @Inject
+    GiphyApi Api;
+    public ListPresenterImp(GiphyApi api)
     {
-        this.view=view;
+     this.Api=api;
     }
     @Override
     public void getListItems() {
-        GiphyApi Api =new RetrofitBuilder().getApi();
-        Api.getTrending(RetrofitBuilder.key,Offset,20).enqueue(new Callback<ItemsModel>() {
+        Api.getTrending(Constants.key,Offset,20).enqueue(new Callback<ItemsModel>() {
             @Override
             public void onResponse(Call<ItemsModel> call, Response<ItemsModel> response) {
                List<Item> item=new ArrayList<>();
@@ -47,7 +55,7 @@ public class ListPresenterImp implements ListContract.Presenter {
                        item.add(a);
                }
                Offset= (int) (model.getPagination().getOffset()+20);
-               view.ShowItems(item);
+               view.get().ShowItems(item);
 
             }
 
@@ -57,5 +65,15 @@ public class ListPresenterImp implements ListContract.Presenter {
             }
         });
 
+    }
+
+    @Override
+    public void attach(BaseContract.View view) {
+        this.view=new WeakReference<ListContract.View>((ListContract.View)view);
+    }
+
+    @Override
+    public void detach() {
+        view.clear();
     }
 }

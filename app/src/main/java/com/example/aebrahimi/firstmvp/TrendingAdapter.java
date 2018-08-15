@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.aebrahimi.firstmvp.Model.Item;
-import com.example.aebrahimi.firstmvp.ShowContract.ShowActivity;
+import com.example.aebrahimi.firstmvp.ShowContract.ShowView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Holder
         return new Holder(LayoutInflater.from(c).inflate(R.layout.list_items, parent, false), new ItemClickListener() {
             @Override
             public void OnItemClick(View view, int Position) {
-            Intent intent=new Intent(parent.getContext(),ShowActivity.class);
+            Intent intent=new Intent(parent.getContext(),ShowView.class);
             intent.putExtra("item",items.get(Position));
             parent.getContext().startActivity(intent);
 

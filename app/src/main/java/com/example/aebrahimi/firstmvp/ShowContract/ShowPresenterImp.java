@@ -1,36 +1,37 @@
 package com.example.aebrahimi.firstmvp.ShowContract;
 
-import android.content.Intent;
 import android.util.Log;
 
-import com.example.aebrahimi.firstmvp.ListContract.ListContract;
+import com.example.aebrahimi.firstmvp.BaseContract.BaseContract;
+import com.example.aebrahimi.firstmvp.Constants;
 import com.example.aebrahimi.firstmvp.Model.Item;
-import com.example.aebrahimi.firstmvp.Model.ItemsModel;
 import com.example.aebrahimi.firstmvp.Model.RandomModel;
 import com.example.aebrahimi.firstmvp.Network.GiphyApi;
-import com.example.aebrahimi.firstmvp.Network.RetrofitBuilder;
 
-import java.util.ArrayList;
+import java.lang.ref.WeakReference;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by aebrahimi on 8/14/2018 AD.
  */
 
 public class ShowPresenterImp implements ShowContract.Presenter {
-    ShowContract.View showActivity;
-    public ShowPresenterImp(ShowContract.View view)
+    WeakReference<ShowContract.View> view;
+    GiphyApi api;
+
+    @Inject
+    public ShowPresenterImp(GiphyApi api)
     {
-        this.showActivity=view;
+        this.api = api;
     }
     @Override
     public void getRandomItems() {
-        GiphyApi api=new RetrofitBuilder().getApi();
-        api.getRandoms(RetrofitBuilder.key).enqueue(new Callback<RandomModel>() {
+        api.getRandoms(Constants.key).enqueue(new Callback<RandomModel>() {
             @Override
             public void onResponse(Call<RandomModel> call, Response<RandomModel> response) {
                 RandomModel model=response.body();
@@ -41,7 +42,7 @@ public class ShowPresenterImp implements ShowContract.Presenter {
                 item.setOriginalUrl(model.getData().getImage().getOriginalImage().getUrl());
                 item.setOriginalUrl(item.getOriginalUrl().replace("giphy_s","200w"));
                 Log.d("showp",item.getUrl()+" "+item.getOriginalUrl());
-                    showActivity.ShowRandomItem(item);
+                    view.get().ShowRandomItem(item);
             }
 
             @Override
@@ -50,5 +51,16 @@ public class ShowPresenterImp implements ShowContract.Presenter {
             }
         });
 
+    }
+
+
+    @Override
+    public void attach(BaseContract.View view) {
+        this.view = new WeakReference<>((ShowContract.View) view);
+    }
+
+    @Override
+    public void detach() {
+        this.view.clear();
     }
 }

@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ProgressBar;
 
-import com.example.aebrahimi.firstmvp.ListContract.ListContract;
-import com.example.aebrahimi.firstmvp.ListContract.ListPresenterImp;
+import com.example.aebrahimi.firstmvp.App;
 import com.example.aebrahimi.firstmvp.Model.Item;
 import com.example.aebrahimi.firstmvp.R;
 import com.example.aebrahimi.firstmvp.TrendingAdapter;
@@ -17,19 +15,26 @@ import com.example.aebrahimi.firstmvp.TrendingAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ListContract.View{
+import javax.inject.Inject;
+
+public class ListView extends AppCompatActivity implements ListContract.View{
+    @Inject
    ListContract.Presenter presenter;
    TrendingAdapter adapter;
    RecyclerView recyclerView;
    GridLayoutManager layoutManager;
    ProgressBar progressBar;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView=findViewById(R.id.recycler_trend);
         progressBar=findViewById(R.id.progressBar);
-        presenter = new ListPresenterImp(this);
+        App.getInjector().inject(this);
+        presenter.attach(this);
         adapter=new TrendingAdapter(this,new ArrayList<Item>()) ;
         layoutManager= new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
@@ -67,4 +72,10 @@ public class MainActivity extends AppCompatActivity implements ListContract.View
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
+    }
+
 }

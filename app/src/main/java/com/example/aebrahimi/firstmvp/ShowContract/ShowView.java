@@ -9,23 +9,32 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.example.aebrahimi.firstmvp.App;
 import com.example.aebrahimi.firstmvp.Model.Item;
+
 import com.example.aebrahimi.firstmvp.R;
 
+import javax.inject.Inject;
 
-public class ShowActivity extends AppCompatActivity implements ShowContract.View {
+
+public class ShowView extends AppCompatActivity implements ShowContract.View {
     ImageView gifPreview;
     ProgressBar progressBar;
     Button randomButton;
+
+    @Inject
     ShowContract.Presenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
+        //inject
+        App.getInjector().inject(this);
+        presenter.attach(this);
         gifPreview=findViewById(R.id.gif_preview);
         progressBar=findViewById(R.id.progressBarShow);
         randomButton=findViewById(R.id.button);
-        presenter=new ShowPresenterImp(this);
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +50,7 @@ public class ShowActivity extends AppCompatActivity implements ShowContract.View
 
      @Override
      public void ShowRandomItem(Item item) {
-         Glide.with(ShowActivity.this).load(item.getOriginalUrl()).into(gifPreview);
+         Glide.with(ShowView.this).load(item.getOriginalUrl()).into(gifPreview);
          Log.d("show","ok");
      }
 
@@ -53,5 +62,11 @@ public class ShowActivity extends AppCompatActivity implements ShowContract.View
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
     }
 }

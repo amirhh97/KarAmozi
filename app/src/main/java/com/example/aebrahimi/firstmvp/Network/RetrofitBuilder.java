@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitBuilder {
-    public static String key="jwGikKxp8oo5I12YxuU7bWPQY7aIOzdR";
+    ;
     String BaseUri="https://api.giphy.com/";
     private Retrofit retrofit;
     public GiphyApi getApi()
