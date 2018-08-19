@@ -36,4 +36,14 @@
         android:enabled="false"
         android:text="get a random gif"
         android:textStyle="italic" />
+
+    <ProgressBar
+        android:id="@+id/horizental_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:max="10"
+        android:progress="0"
+        android:paddingTop="15dp"
+        style="?android:attr/progressBarStyleHorizontal"/>
 </RelativeLayout>
