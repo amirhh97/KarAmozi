@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
-        app:srcCompat="@mipmap/ic_launcher" />
+       />
     <ProgressBar
         android:id="@+id/progressBarShow"
         android:layout_width="64dp"
@@ -37,13 +37,16 @@
         android:text="get a random gif"
         android:textStyle="italic" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true">
     <ProgressBar
         android:id="@+id/horizental_progressbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:max="10"
+        android:layout_height="36dp"
+        android:max="10000"
         android:progress="0"
-        android:paddingTop="15dp"
         style="?android:attr/progressBarStyleHorizontal"/>
+    </FrameLayout>
 </RelativeLayout>
